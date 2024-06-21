@@ -29,7 +29,7 @@ Run the project:
 bash
 npm run dev
 Open your browser and navigate to:
-http://localhost:3000
+http://localhost:5173
 
 Usage
 Once the project is running, you can use the calculator for various types of calculations:
