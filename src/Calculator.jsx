@@ -195,7 +195,7 @@ const Calculator = () => {
 
   return (
     <div>
-    <div className={`bg-white ${isDarkMode ? ' text-white bg-zinc-900' : 'bg-white text-black'} rounded-lg shadow-lg p-6 w-128 relative mt-5`}>
+    <div className={`min-w-64 bg-white ${isDarkMode ? ' text-white bg-zinc-900' : 'bg-white text-black'} rounded-lg shadow-lg p-6 w-128 relative mt-5`}>
       {confetti && <ConfettiExplosion />}
       <div className="flex justify-end mb-4 gap-2">
         <button
@@ -208,8 +208,8 @@ const Calculator = () => {
       <div className={`rounded-lg p-4 mb-4 h-16 ${isDarkMode ? 'bg-zinc-700' : 'bg-zinc-200'}`}>
         <div className="text-2xl">{displayedInput}</div>
       </div>
-      <div className='flex flex-row gap-3'>
-        <div className="grid grid-cols-6 gap-2">
+      <div className='flex flex-col sm:flex-row gap-3 min-w-64'>
+        <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 min-w-64">
             <Button value={isRadians ? "Rad" : "Deg"} onClick={() => handleAdvancedFunction('Rad')} className="col-span-1 bg-zinc-500 text-white" />
             <Button value="x^2" onClick={() => handleAdvancedFunction('x^2')} className="col-span-1 bg-zinc-500 text-white" />
             <Button value="x^3" onClick={() => handleAdvancedFunction('x^3')} className="col-span-1 bg-zinc-500 text-white" />
@@ -238,7 +238,7 @@ const Calculator = () => {
             <Button value="2nd" onClick={() => setIsRadians(!isRadians)} className="col-span-1 bg-zinc-500 text-white" />
             <Button value="history" onClick={() => console.log(history)} className="col-span-1 bg-zinc-500 text-white" />
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2 min-w-64">
                 <Button value="AC" onClick={handleClear} className="col-span-1 bg-zinc-500 text-white" />
                 <Button value="(" onClick={() => handleClick('(')} className="col-span-1 bg-zinc-500 text-white" />
                 <Button value=")" onClick={() => handleClick(')')} className="col-span-1 bg-zinc-500 text-white" />
