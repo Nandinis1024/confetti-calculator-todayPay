@@ -15,17 +15,20 @@ const Calculator = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [history, setHistory] = useState([]);
 
+  //handle clicking on the button and updating the input and displayed input
   const handleClick = (value) => {
     setInput(input + value);
     setDisplayedInput(displayedInput + value);
   };
-
+ 
+  //handle clearing the input and displayed input
   const handleClear = () => {
     setInput('');
     setDisplayedInput('');
     setResult('');
   };
-
+ 
+  //balance the parentheses in the input  
   const balanceParentheses = (input) => {
     let opened = 0;
     let closed = 0;
@@ -41,14 +44,19 @@ const Calculator = () => {
       return input;
     }
   };
-
+  
+  //trigonometric functions in degrees
   const sinDegrees = (degrees) => Math.sin(degrees * (Math.PI / 180));
   const cosDegrees = (degrees) => Math.cos(degrees * (Math.PI / 180));
   const tanDegrees = (degrees) => Math.tan(degrees * (Math.PI / 180));
 
+
+  //calculate the result of the input
   const handleCalculate = () => {
     try {
       let correctedInput = balanceParentheses(input);
+
+      //parse the input and replace trigonometric functions with their respective functions
       let parsedInput = correctedInput
         .replace(/(\d+)sin\((\d+)\)/g, '($1 * ' + (isRadians ? 'Math.sin' : 'sinDegrees') + '($2))')
         .replace(/(\d+)cos\((\d+)\)/g, '($1 * ' + (isRadians ? 'Math.cos' : 'cosDegrees') + '($2))')
@@ -63,23 +71,29 @@ const Calculator = () => {
       setDisplayedInput(calculatedResult);
       setResult(calculatedResult);
 
+      //check if the input contains 5 and 6 and set the confetti to true
       if (input.includes('5') && input.includes('6')) {
         setConfetti(true);
         setTimeout(() => setConfetti(false), 3000);
       }
+
+      //add the input and result to the history
       setHistory([...history, { input, result: calculatedResult }]);
     } catch (error) {
       setResult('Error');
     }
   };
-
+  
+  //handle trigonometric functions
   const handleTrigFunction = (func) => {
     setInput('1' + input + func + '(');
     setDisplayedInput(displayedInput + func + '(');
   };
-
+  
+  //calculate the factorial of a number
   const factorial = (n) => (n === 0 ? 1 : n * factorial(n - 1));
-
+  
+  //handle the logic for the memory buttons
   const handleMemory = (action) => {
     switch (action) {
       case 'MC':
@@ -100,6 +114,7 @@ const Calculator = () => {
     }
   };
 
+  //handling the logic for advance scientific buttons
   const handleAdvancedFunction = (func) => {
     switch (func) {
       case 'x^2':
