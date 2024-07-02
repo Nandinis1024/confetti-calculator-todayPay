@@ -16,6 +16,16 @@ const Calculator = () => {
   const [history, setHistory] = useState([]);
 
   //handle clicking on the button and updating the input and displayed input
+  function preprocessExpression(expression) {
+    // Replace occurrences of multiple operators with their correct single operator equivalents
+    expression = expression.replace(/\+\+/g, '+');
+    expression = expression.replace(/--/g, '-');
+    expression = expression.replace(/\+-/g, '-');
+    expression = expression.replace(/-\+/g, '-');
+  
+    return expression;
+  }
+
   const handleClick = (value) => {
     setInput(input + value);
     setDisplayedInput(displayedInput + value);
@@ -55,6 +65,7 @@ const Calculator = () => {
   const handleCalculate = () => {
     try {
       let correctedInput = balanceParentheses(input);
+      correctedInput = preprocessExpression(correctedInput);
 
       //parse the input and replace trigonometric functions with their respective functions
       let parsedInput = correctedInput
@@ -66,7 +77,11 @@ const Calculator = () => {
         .replace(/(\))(\d+)/g, '$1*$2')
         .replace(/(\d+)(\()/g, '$1*$2');
       console.log(parsedInput);
-      const calculatedResult = eval(parsedInput);
+      let calculatedResult = '';
+      if(parsedInput !== '') {
+        calculatedResult = eval(parsedInput);
+      }
+      console.log(calculatedResult);
       setInput(calculatedResult);
       setDisplayedInput(calculatedResult);
       setResult(calculatedResult);
@@ -78,7 +93,9 @@ const Calculator = () => {
       }
 
       //add the input and result to the history
+      if(input !== '' && calculatedResult !== ''){
       setHistory([...history, { input, result: calculatedResult }]);
+      }
     } catch (error) {
       setResult('Error');
     }
@@ -272,7 +289,7 @@ const Calculator = () => {
     </div>
 </div>
 
-        </div>
+  </div>
   );
 };
 
